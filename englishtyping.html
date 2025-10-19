@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Master - English Typing Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .app-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .main-content {
+            flex: 3;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mode-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mode-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .text-display {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            min-height: 150px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .current-word {
+            background-color: #ffcc00;
+            color: #000;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        .correct {
+            color: #4CAF50;
+        }
+
+        .incorrect {
+            color: #f44336;
+            text-decoration: underline;
+        }
+
+        .input-area {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 20px;
+            transition: border 0.3s;
+        }
+
+        .input-area:focus {
+            outline: none;
+            border: 2px solid #ffcc00;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .primary {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .secondary {
+            background: #2196F3;
+            color: white;
+        }
+
+        .danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .progress-section {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: #4CAF50;
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        .lesson-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .lesson-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .lesson-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lesson-item.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-left: 4px solid #ffcc00;
+        }
+
+        .keyboard {
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .keyboard-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .key {
+            width: 40px;
+            height: 40px;
+            margin: 0 3px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .key.active {
+            background: #ffcc00;
+            color: #000;
+            transform: scale(0.95);
+        }
+
+        .space {
+            width: 200px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            
+            .key {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+            
+            .space {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Typing Master</h1>
+            <p class="subtitle">Improve your English typing speed and accuracy</p>
+        </header>
+
+        <div class="app-container">
+            <div class="main-content">
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="lessons">Lessons</button>
+                    <button class="mode-btn" data-mode="practice">Practice</button>
+                    <button class="mode-btn" data-mode="speed-test">Speed Test</button>
+                </div>
+
+                <div class="text-display" id="textDisplay">
+                    Click "Start" to begin typing practice. Focus on accuracy first, then speed.
+                </div>
+
+                <input type="text" class="input-area" id="typingInput" placeholder="Start typing here..." disabled>
+
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="wpm">0</div>
+                        <div class="stat-label">WPM</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="accuracy">100%</div>
+                        <div class="stat-label">Accuracy</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="timer">60</div>
+                        <div class="stat-label">Seconds</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn primary" id="startBtn">Start</button>
+                    <button class="btn secondary" id="resetBtn" disabled>Reset</button>
+                    <button class="btn danger" id="pauseBtn" disabled>Pause</button>
+                </div>
+
+                <div class="keyboard">
+                    <div class="keyboard-row">
+                        <div class="key">`</div>
+                        <div class="key">1</div>
+                        <div class="key">2</div>
+                        <div class="key">3</div>
+                        <div class="key">4</div>
+                        <div class="key">5</div>
+                        <div class="key">6</div>
+                        <div class="key">7</div>
+                        <div class="key">8</div>
+                        <div class="key">9</div>
+                        <div class="key">0</div>
+                        <div class="key">-</div>
+                        <div class="key">=</div>
+                        <div class="key" style="width: 80px;">Backspace</div>
+                    </div>
+                    <div class="keyboard-row">
+                        <div class="key" style="width: 60px;">Tab</div>
+                        <div class="key">Q</div>
+                        <div class="key">W</div>
+                        <div class="key">E</div>
+                        <div class="key">R</div>
+                        <div class="key">T</div>
+                        <div class="key">Y</div>
+                        <div class="key">U</div>
+                        <div class="key">I</div>
+                        <div class="key">O</div>
+                        <div class="key">P</div>
+                        <div class="key">[</div>
+                        <div class="key">]</div>
+                        <div class="key">\</div>
+                    </div>
+                    <div class="keyboard-row">
+                        <div class="key" style="width: 70px;">Caps</div>
+                        <div class="key">A</div>
+                        <div class="key">S</div>
+                        <div class="key">D</div>
+                        <div class="key">F</div>
+                        <div class="key">G</div>
+                        <div class="key">H</div>
+                        <div class="key">J</div>
+                        <div class="key">K</div>
+                        <div class="key">L</div>
+                        <div class="key">;</div>
+                        <div class="key">'</div>
+                        <div class="key" style="width: 70px;">Enter</div>
+                    </div>
+                    <div class="keyboard-row">
+                        <div class="key" style="width: 90px;">Shift</div>
+                        <div class="key">Z</div>
+                        <div class="key">X</div>
+                        <div class="key">C</div>
+                        <div class="key">V</div>
+                        <div class="key">B</div>
+                        <div class="key">N</div>
+                        <div class="key">M</div>
+                        <div class="key">,</div>
+                        <div class="key">.</div>
+                        <div class="key">/</div>
+                        <div class="key" style="width: 90px;">Shift</div>
+                    </div>
+                    <div class="keyboard-row">
+                        <div class="key space">Space</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <h2>Lessons</h2>
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress" id="lessonProgress"></div>
+                    </div>
+                    <p>Progress: <span id="progressText">0%</span></p>
+                </div>
+
+                <ul class="lesson-list">
+                    <li class="lesson-item active">Home Row Basics</li>
+                    <li class="lesson-item">Top Row Practice</li>
+                    <li class="lesson-item">Bottom Row Practice</li>
+                    <li class="lesson-item">Number Row</li>
+                    <li class="lesson-item">Common Words</li>
+                    <li class="lesson-item">Sentences</li>
+                    <li class="lesson-item">Paragraphs</li>
+                    <li class="lesson-item">Speed Building</li>
+                </ul>
+
+                <div style="margin-top: 30px;">
+                    <h2>Tips</h2>
+                    <ul style="margin-top: 10px; padding-left: 20px;">
+                        <li>Keep your fingers on the home row</li>
+                        <li>Use all ten fingers for typing</li>
+                        <li>Focus on accuracy before speed</li>
+                        <li>Practice regularly for best results</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Typing Master &copy; 2023 | Practice makes perfect!</p>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const textDisplay = document.getElementById('textDisplay');
+        const typingInput = document.getElementById('typingInput');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const wpmElement = document.getElementById('wpm');
+        const accuracyElement = document.getElementById('accuracy');
+        const timerElement = document.getElementById('timer');
+        const lessonProgress = document.getElementById('lessonProgress');
+        const progressText = document.getElementById('progressText');
+        const modeButtons = document.querySelectorAll('.mode-btn');
+        const lessonItems = document.querySelectorAll('.lesson-item');
+        const keys = document.querySelectorAll('.key');
+
+        // Application State
+        let currentMode = 'lessons';
+        let isTyping = false;
+        let isPaused = false;
+        let timer;
+        let timeLeft = 60;
+        let startTime;
+        let correctChars = 0;
+        let totalChars = 0;
+        let currentText = '';
+        let currentWordIndex = 0;
+        let words = [];
+
+        // Sample texts for different modes
+        const lessonTexts = [
+            "asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj",
+            "Practice typing regularly to improve your speed and accuracy. Focus on hitting the correct keys without looking at the keyboard.",
+            "Computer programming is a valuable skill in today's digital world. Learning to type efficiently will help you code faster.",
+            "Accuracy is more important than speed when you are starting out. Slow down and make sure you are pressing the right keys.",
+            "Touch typing involves using all ten fingers without looking at the keyboard. This method increases typing speed significantly."
+        ];
+
+        const practiceTexts = [
+            "asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj asdf ;lkj",
+            "The internet has revolutionized how we communicate and access information. Typing is an essential skill for online communication.",
+            "Many jobs require good typing skills. From data entry to content creation, efficient typing can improve your productivity.",
+            "Learning to type without looking at the keyboard is called touch typing. It allows you to type faster and with fewer errors.",
+            "Regular practice is the key to improving your typing speed. Challenge yourself with different texts and time limits."
+        ];
+
+        const speedTestTexts = [
+            "",
+            "Education is the foundation of personal and professional growth. It empowers individuals with knowledge and skills needed to navigate the complexities of the modern world and contribute meaningfully to society.",
+            "Climate change is one of the most pressing issues facing our planet today. It requires global cooperation and immediate action to mitigate its effects and preserve the environment for future generations.",
+            "The digital revolution has created new opportunities for communication and collaboration. People from different parts of the world can now connect instantly, sharing ideas and working together on projects.",
+            "Health and wellness are essential components of a fulfilling life. Regular exercise, balanced nutrition, and adequate rest contribute to both physical and mental well-being."
+        ];
+
+        // Initialize the app
+        function init() {
+            // Set up event listeners
+            startBtn.addEventListener('click', startTyping);
+            resetBtn.addEventListener('click', resetTyping);
+            pauseBtn.addEventListener('click', togglePause);
+            typingInput.addEventListener('input', handleTyping);
+            
+            modeButtons.forEach(button => {
+                button.addEventListener('click', () => switchMode(button.dataset.mode));
+            });
+            
+            lessonItems.forEach((item, index) => {
+                item.addEventListener('click', () => selectLesson(index));
+            });
+            
+            // Set initial text
+            updateDisplayText();
+            
+            // Highlight keys on keyboard press
+            document.addEventListener('keydown', (e) => {
+                const key = e.key.toLowerCase();
+                highlightKey(key);
+            });
+            
+            document.addEventListener('keyup', (e) => {
+                const key = e.key.toLowerCase();
+                unhighlightKey(key);
+            });
+        }
+
+        // Switch between different modes
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // Update active mode button
+            modeButtons.forEach(button => {
+                if (button.dataset.mode === mode) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+            });
+            
+            // Reset and update display
+            resetTyping();
+            updateDisplayText();
+        }
+
+        // Select a lesson
+        function selectLesson(index) {
+            lessonItems.forEach((item, i) => {
+                if (i === index) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Update progress (simulated)
+            const progress = (index / (lessonItems.length - 1)) * 100;
+            lessonProgress.style.width = `${progress}%`;
+            progressText.textContent = `${Math.round(progress)}%`;
+            
+            // Reset typing with new lesson
+            resetTyping();
+            updateDisplayText();
+        }
+
+        // Update the text display based on current mode and lesson
+        function updateDisplayText() {
+            let textArray;
+            
+            switch(currentMode) {
+                case 'lessons':
+                    const activeLessonIndex = Array.from(lessonItems).findIndex(item => 
+                        item.classList.contains('active')
+                    );
+                    textArray = lessonTexts;
+                    currentText = textArray[activeLessonIndex % textArray.length];
+                    break;
+                case 'practice':
+                    textArray = practiceTexts;
+                    currentText = textArray[Math.floor(Math.random() * textArray.length)];
+                    break;
+                case 'speed-test':
+                    textArray = speedTestTexts;
+                    currentText = textArray[Math.floor(Math.random() * textArray.length)];
+                    break;
+            }
+            
+            words = currentText.split(' ');
+            currentWordIndex = 0;
+            renderText();
+        }
+
+        // Render the text with highlighting
+        function renderText() {
+            let html = '';
+            
+            words.forEach((word, index) => {
+                if (index === currentWordIndex) {
+                    html += `<span class="current-word">${word}</span> `;
+                } else if (index < currentWordIndex) {
+                    html += `<span class="correct">${word}</span> `;
+                } else {
+                    html += `<span>${word}</span> `;
+                }
+            });
+            
+            textDisplay.innerHTML = html;
+        }
+
+        // Start the typing test
+        function startTyping() {
+            if (isTyping) return;
+            
+            isTyping = true;
+            isPaused = false;
+            startTime = new Date();
+            timeLeft = 60;
+            
+            // Update UI
+            startBtn.disabled = true;
+            resetBtn.disabled = false;
+            pauseBtn.disabled = false;
+            typingInput.disabled = false;
+            typingInput.value = '';
+            typingInput.focus();
+            
+            // Reset stats
+            correctChars = 0;
+            totalChars = 0;
+            updateStats();
+            
+            // Start timer
+            timer = setInterval(updateTimer, 1000);
+        }
+
+        // Reset the typing test
+        function resetTyping() {
+            clearInterval(timer);
+            isTyping = false;
+            isPaused = false;
+            
+            // Reset UI
+            startBtn.disabled = false;
+            resetBtn.disabled = true;
+            pauseBtn.disabled = true;
+            typingInput.disabled = true;
+            typingInput.value = '';
+            
+            // Reset stats
+            timeLeft = 60;
+            correctChars = 0;
+            totalChars = 0;
+            currentWordIndex = 0;
+            
+            updateStats();
+            updateDisplayText();
+        }
+
+        // Toggle pause/resume
+        function togglePause() {
+            if (!isTyping) return;
+            
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                clearInterval(timer);
+                typingInput.disabled = true;
+                pauseBtn.textContent = 'Resume';
+            } else {
+                timer = setInterval(updateTimer, 1000);
+                typingInput.disabled = false;
+                typingInput.focus();
+                pauseBtn.textContent = 'Pause';
+            }
+        }
+
+        // Update the timer
+        function updateTimer() {
+            timeLeft--;
+            timerElement.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                endTypingTest();
+            }
+        }
+
+        // Handle typing input
+        function handleTyping() {
+            if (!isTyping || isPaused) return;
+            
+            const typedValue = typingInput.value.trim();
+            const currentWord = words[currentWordIndex];
+            
+            // Check if word is completed
+            if (typedValue === currentWord && typedValue.length === currentWord.length) {
+                // Move to next word
+                currentWordIndex++;
+                typingInput.value = '';
+                
+                // Update character counts
+                correctChars += currentWord.length + 1; // +1 for space
+                totalChars += currentWord.length + 1;
+                
+                // Check if all words are completed
+                if (currentWordIndex >= words.length) {
+                    if (currentMode === 'speed-test') {
+                        endTypingTest();
+                    } else {
+                        // In lessons/practice, generate new text
+                        updateDisplayText();
+                    }
+                } else {
+                    renderText();
+                }
+            } else {
+                // Update character counts for partial typing
+                totalChars = correctChars + typedValue.length;
+                
+                // Check for errors in current word
+                for (let i = 0; i < typedValue.length; i++) {
+                    if (typedValue[i] !== currentWord[i]) {
+                        // Error found
+                        break;
+                    }
+                }
+            }
+            
+            updateStats();
+        }
+
+        // Update statistics (WPM and accuracy)
+        function updateStats() {
+            // Calculate WPM (words per minute)
+            const elapsedTime = (new Date() - startTime) / 1000 / 60; // in minutes
+            const wpm = elapsedTime > 0 ? Math.round(correctChars / 5 / elapsedTime) : 0;
+            wpmElement.textContent = wpm;
+            
+            // Calculate accuracy
+            const accuracy = totalChars > 0 ? Math.round((correctChars / totalChars) * 100) : 100;
+            accuracyElement.textContent = `${accuracy}%`;
+        }
+
+        // End the typing test
+        function endTypingTest() {
+            clearInterval(timer);
+            isTyping = false;
+            
+            // Update UI
+            startBtn.disabled = false;
+            resetBtn.disabled = false;
+            pauseBtn.disabled = true;
+            typingInput.disabled = true;
+            
+            // Show results
+            const finalWPM = wpmElement.textContent;
+            const finalAccuracy = accuracyElement.textContent;
+            
+            textDisplay.innerHTML = `
+                <div style="text-align: center;">
+                    <h3>Test Complete!</h3>
+                    <p>Your typing speed: <strong>${finalWPM} WPM</strong></p>
+                    <p>Accuracy: <strong>${finalAccuracy}</strong></p>
+                    <p>Click "Start" to try again</p>
+                </div>
+            `;
+        }
+
+        // Highlight key on virtual keyboard
+        function highlightKey(key) {
+            keys.forEach(k => {
+                const keyText = k.textContent.toLowerCase();
+                
+                // Handle special keys
+                if (key === ' ' && k.classList.contains('space')) {
+                    k.classList.add('active');
+                } else if (key === 'backspace' && keyText === 'backspace') {
+                    k.classList.add('active');
+                } else if (key === 'enter' && keyText === 'enter') {
+                    k.classList.add('active');
+                } else if (key === 'tab' && keyText === 'tab') {
+                    k.classList.add('active');
+                } else if (key === 'capslock' && keyText === 'caps') {
+                    k.classList.add('active');
+                } else if (key === 'shift' && keyText === 'shift') {
+                    k.classList.add('active');
+                } else if (key.length === 1 && keyText === key) {
+                    k.classList.add('active');
+                }
+            });
+        }
+
+        // Unhighlight key on virtual keyboard
+        function unhighlightKey(key) {
+            keys.forEach(k => {
+                const keyText = k.textContent.toLowerCase();
+                
+                // Handle special keys
+                if (key === ' ' && k.classList.contains('space')) {
+                    k.classList.remove('active');
+                } else if (key === 'backspace' && keyText === 'backspace') {
+                    k.classList.remove('active');
+                } else if (key === 'enter' && keyText === 'enter') {
+                    k.classList.remove('active');
+                } else if (key === 'tab' && keyText === 'tab') {
+                    k.classList.remove('active');
+                } else if (key === 'capslock' && keyText === 'caps') {
+                    k.classList.remove('active');
+                } else if (key === 'shift' && keyText === 'shift') {
+                    k.classList.remove('active');
+                } else if (key.length === 1 && keyText === key) {
+                    k.classList.remove('active');
+                }
+            });
+        }
+
+        // Initialize the app when the page loads
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NS Class - Teacher Directory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .teacher-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .teacher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .teacher-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .teacher-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .teacher-card:hover .teacher-image img {
+            transform: scale(1.05);
+        }
+        
+        .teacher-info {
+            padding: 20px;
+        }
+        
+        .teacher-name {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .teacher-subject {
+            color: #6a11cb;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .teacher-bio {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .teacher-detail {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .detail-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .detail-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 25px;
+            border: 5px solid #f0f0f0;
+        }
+        
+        .detail-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .detail-info h2 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .detail-subject {
+            color: #6a11cb;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .detail-contact {
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .contact-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            color: #6a11cb;
+        }
+        
+        .back-button {
+            background: #6a11cb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: #5a0db3;
+        }
+        
+        @media (max-width: 768px) {
+            .detail-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .detail-image {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .teachers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>NS Class Teacher's</h1>
+            <p class="subtitle">Meet our dedicated teaching staff</p>
+        </header>
+        
+        <div class="teachers-grid" id="teachersGrid">
+            <!-- Teacher cards will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="teacher-detail" id="teacherDetail">
+            <!-- Teacher details will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Teacher data with profile pictures
+        const teachers = [
+            {
+                id: 1,
+                name: "Mr. Sartaz Sir",
+                subject: "Computer & Mathematics",
+                bio: "My name is Sartaz Hussain I TOP in JNVST And jamia entrance exam and Expreance Of 4.5 Years . .",
+                email: "sartaz845418@gmail.com",
+                phone: "+91 8863836259",
+                office: "01",
+                education: "Ph.D. in Computer & Mathematics",
+                experience: "4.5 years teaching experience",
+                profilePic: "sartaz.png"
+            },
+            {
+                id: 2,
+                name: "Mr. Nirale Sir.",
+                subject: "Computer & Science",
+                bio: "Focuses on hands-on experiments and real-world applications of scientific principles.",
+                email: "anirale748@gmail.com",
+                phone: "+91 6205186113",
+                office: "Room 02",
+                education: "M.A Pass",
+                experience: "3.9 years teaching experience",
+                profilePic: "nirale.png"
+            },
+            {
+                id: 3,
+                name: "Mr. Najib Sir",
+                subject: "Math",
+                bio: "Teaches Spanish and French with an emphasis on cultural immersion and conversation.",
+                email: "najibullahmohammad883@gmail.com",
+                phone: "+1 (555) 345-6789",
+                office: "Room 03",
+                education: "B.Tech M.Tech M.B.B.S",
+                experience: "2 years teaching experience",
+                profilePic: "njs.png"
+            },
+            {
+                id: 4,
+                name: "Mr. James Wilson",
+                subject: "History",
+                bio: "Brings history to life with engaging stories and primary source analysis.",
+                email: "j.wilson@nsclass.edu",
+                phone: "+1 (555) 456-7890",
+                office: "Room 208",
+                education: "Ph.D. in History, Harvard University",
+                experience: "18 years teaching experience",
+                profilePic: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+            }
+        ];
+
+        // Function to display teacher cards
+        function displayTeacherCards() {
+            const teachersGrid = document.getElementById('teachersGrid');
+            
+            teachers.forEach(teacher => {
+                const card = document.createElement('div');
+                card.className = 'teacher-card';
+                card.setAttribute('data-id', teacher.id);
+                
+                card.innerHTML = `
+                    <div class="teacher-image">
+                        <img src="${teacher.profilePic}" alt="${teacher.name}">
+                    </div>
+                    <div class="teacher-info">
+                        <h3 class="teacher-name">${teacher.name}</h3>
+                        <p class="teacher-subject">${teacher.subject}</p>
+                        <p class="teacher-bio">${teacher.bio}</p>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => showTeacherDetail(teacher.id));
+                teachersGrid.appendChild(card);
+            });
+        }
+
+        // Function to show teacher details
+        function showTeacherDetail(teacherId) {
+            const teacher = teachers.find(t => t.id === teacherId);
+            const teacherDetail = document.getElementById('teacherDetail');
+            const teachersGrid = document.getElementById('teachersGrid');
+            
+            teacherDetail.innerHTML = `
+                <div class="detail-header">
+                    <div class="detail-image">
+                        <img src="${teacher.profilePic}" alt="${teacher.name}">
+                    </div>
+                    <div class="detail-info">
+                        <h2>${teacher.name}</h2>
+                        <p class="detail-subject">${teacher.subject}</p>
+                        <p>${teacher.bio}</p>
+                    </div>
+                </div>
+                
+                <div class="detail-contact">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <span>${teacher.email}</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <span>${teacher.phone}</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🏢</div>
+                        <span>${teacher.office}</span>
+                    </div>
+                </div>
+                
+                <div class="detail-contact">
+                    <h3>Qualifications</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">🎓</div>
+                        <span>${teacher.education}</span>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📚</div>
+                        <span>${teacher.experience}</span>
+                    </div>
+                </div>
+                
+                <button class="back-button" id="backButton">Back to Teachers</button>
+            `;
+            
+            // Show detail section and hide grid
+            teacherDetail.style.display = 'block';
+            teachersGrid.style.display = 'none';
+            
+            // Add event listener to back button
+            document.getElementById('backButton').addEventListener('click', () => {
+                teacherDetail.style.display = 'none';
+                teachersGrid.style.display = 'grid';
+            });
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', displayTeacherCards);
+    </script>
+</body>
+</html>

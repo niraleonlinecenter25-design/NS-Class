@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Computer Class</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000, #333333, #666666);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .header-text {
+            flex-grow: 1;
+        }
+
+        .class-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .page-title {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: #ddd;
+        }
+
+        /* Banner Section */
+        .banner {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            height: 300px;
+            position: relative;
+        }
+
+        .banner-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: ;
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: ;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .banner-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: #ddd;
+            max-width: 600px;
+        }
+
+        /* Buttons Section */
+        .buttons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .main-btn {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            display: block;
+        }
+
+        .main-btn:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .btn-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .btn-desc {
+            font-size: 1rem;
+            opacity: 0.8;
+            color: #ddd;
+            line-height: 1.5;
+        }
+
+        /* Link Section */
+        .link-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .link-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .link-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            color: #ddd;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .buttons-container {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .back-btn {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .banner-title {
+                font-size: 2rem;
+            }
+            
+            .banner {
+                height: 250px;
+            }
+            
+            .banner-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .banner {
+                height: 200px;
+            }
+            
+            .banner-title {
+                font-size: 1.5rem;
+            }
+            
+            .banner-subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .main-btn {
+                padding: 30px 20px;
+            }
+            
+            .btn-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <a href="NSCLASS.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="header-text">
+                <div class="class-name">Computer Class</div>
+                <div class="page-title">Online Class</div>
+            </div>
+        </header>
+
+        <!-- Banner Section -->
+        <div class="banner">
+            <img src="nsclass1.png" alt="Computer Class Banner" class="banner-image">
+            <div class="banner-overlay">
+                <h1 class="banner-title"></h1>
+                <p class="banner-subtitle"></p>
+            </div>
+        </div>
+
+        <!-- Buttons Section -->
+        <div class="buttons-container">
+            <!-- Class Video Button -->
+            <a href="com-up.html" class="main-btn" target="_blank">
+                <div class="btn-icon">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <h3 class="btn-title">Class Videos</h3>
+                <p class="btn-desc">Access recorded class videos, tutorials, and course materials anytime, anywhere. Learn at your own pace with our comprehensive video library.</p>
+            </a>
+
+            <!-- Live Video Button -->
+            <a href="Computer-live.html" class="main-btn" target="_blank">
+                <div class="btn-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3 class="btn-title">Live Sessions</h3>
+                <p class="btn-desc">Join live interactive sessions with instructors and fellow students. Get real-time help and participate in discussions.</p>
+            </a>
+        </div>
+
+        <!-- Link Section -->
+        <div class="link-section">
+            <h3 class="link-title">Join Live Class Now</h3>
+            <a href="Computer-live.html" class="link-btn" target="_blank">
+                Click Here to Join Live Class
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Online Computer Class &copy; 2025 | Learn Anytime, Anywhere</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple interactivity for buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.main-btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Link button animation
+            const linkBtn = document.querySelector('.link-btn');
+            linkBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            linkBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+
+            // Back button functionality
+            const backBtn = document.querySelector('.back-btn');
+            backBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Going back to previous page...');
+                // In real implementation, this would navigate to the previous page
+                // window.location.href = this.href;
+            });
+        });
+    </script>
+</body>
+</html>

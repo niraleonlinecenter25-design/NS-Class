@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Class - Online Computer Class</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000, #333333, #666666);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 15px 25px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .header-text {
+            flex-grow: 1;
+        }
+
+        .class-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .page-title {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: #ddd;
+        }
+
+        /* Live Video Section */
+        .live-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .live-dot {
+            width: 12px;
+            height: 12px;
+            background: #ff0000;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .live-text {
+            color: #ff0000;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 500px;
+            background: #000;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .video-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ff0000;
+        }
+
+        .video-message {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ddd;
+        }
+
+        .youtube-btn {
+            background: #ff0000;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .youtube-btn:hover {
+            background: #cc0000;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+        }
+
+        /* Class Info */
+        .class-info {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .info-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            margin-right: 10px;
+            color: #ffcc00;
+            width: 20px;
+        }
+
+        /* Quick Links */
+        .links-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .links-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .link-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .link-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .link-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #ffcc00;
+        }
+
+        .link-text {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            color: #ddd;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .video-placeholder {
+                height: 300px;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .back-btn {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-placeholder {
+                height: 250px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .video-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <a href="javascript:history.back()" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+            <div class="header-text">
+                <div class="class-name">Live Class Session</div>
+                <div class="page-title">Join Live Computer Science Class</div>
+            </div>
+        </header>
+
+        <!-- Live Video Section -->
+        <div class="live-section">
+            <h2 class="section-title">Live Class in Progress</h2>
+            
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <div class="live-text">LIVE NOW</div>
+            </div>
+
+            <div class="video-container">
+                <div class="video-placeholder">
+                    <div class="video-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div class="video-message">
+                        Click below to join the live YouTube session
+                    </div>
+                    <a href="https://www.youtube.com/live" class="youtube-btn" target="_blank">
+                        <i class="fab fa-youtube"></i>
+                        Join YouTube Live
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Class Information -->
+        <div class="class-info">
+            <h3 class="info-title">Today's Class Details</h3>
+            <ul class="info-list">
+                <li class="info-item">
+                    <i class="fas fa-book info-icon"></i>
+                    <span>Topic: Introduction to Programming Concepts</span>
+                </li>
+                <li class="info-item">
+                    <i class="fas fa-clock info-icon"></i>
+                    <span>Duration: 60 minutes</span>
+                </li>
+                <li class="info-item">
+                    <i class="fas fa-user info-icon"></i>
+                    <span>Instructor: NS Computer Teacher</span>
+                </li>
+                <li class="info-item">
+                    <i class="fas fa-calendar info-icon"></i>
+                    <span>Schedule: Monday, Wednesday, Friday</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="links-section">
+            <h3 class="links-title">Quick Access</h3>
+            <div class="links-grid">
+                <a href="https://www.remove.bg/" class="link-card" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="link-text">Class Videos</div>
+                </a>
+                
+                <a href="https://vidyakul.com/" class="link-card" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="link-text">Study Materials</div>
+                </a>
+                
+                <a href="https://meet.google.com/" class="link-card" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="link-text">Group Discussion</div>
+                </a>
+                
+                <a href="https://classroom.google.com/" class="link-card" target="_blank">
+                    <div class="link-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="link-text">Assignments</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Online Computer Class &copy; 2023 | Live Learning Experience</p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const backBtn = document.querySelector('.back-btn');
+            const youtubeBtn = document.querySelector('.youtube-btn');
+            const linkCards = document.querySelectorAll('.link-card');
+
+            // Back button functionality
+            backBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.history.back();
+            });
+
+            // YouTube button animation
+            youtubeBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            youtubeBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+
+            // Link cards animation
+            linkCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Simulate live status update
+            function updateLiveStatus() {
+                const liveDot = document.querySelector('.live-dot');
+                const liveText = document.querySelector('.live-text');
+                
+                // This would typically check actual live status from an API
+                const isLive = true; // Simulate live status
+                
+                if (isLive) {
+                    liveDot.style.background = '#ff0000';
+                    liveText.textContent = 'LIVE NOW';
+                    liveText.style.color = '#ff0000';
+                } else {
+                    liveDot.style.background = '#666';
+                    liveText.textContent = 'OFFLINE';
+                    liveText.style.color = '#666';
+                }
+            }
+
+            // Update live status every 30 seconds
+            setInterval(updateLiveStatus, 30000);
+            updateLiveStatus(); // Initial check
+        });
+    </script>
+</body>
+</html>
